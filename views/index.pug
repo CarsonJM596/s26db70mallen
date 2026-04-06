@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to my updated express page!
+  button(type="button", class="btn btn-secondary", onclick="reduce()") Sample Button
+  div(id="use") Take some away
+  a(href="/journals") View Journals
+  
+  script. 
+    let current = 11;
+    let quantity = 2;
+
+    function reduce() {
+      current -= quantity;
+      
+      if (current < 0) current = 0;
+
+      document.getElementById('use').innerHTML =
+        "Reduced by " + quantity + " to " + current;
+    }

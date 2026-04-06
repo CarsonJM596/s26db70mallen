@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  p Grid page
+  p Rows: #{query.rows}, Columns: #{query.cols}
+  - let rows = Number(query.rows);
+  - let cols = Number(query.cols);
+
+  if !Number.isInteger(rows) || !Number.isInteger(cols)
+    p Please provide valid positive integers for rows and columns.
+  else if rows < 2 || rows > 12
+    p Error: Rows must be between 2 and 12.
+  else if cols < 2 || cols > 12
+    p Error: Columns must be between 2 and 12.
+  else
+    table#outer.table.table-bordered
+      - for (let i = 0; i < rows; i++) { 
+        tr#middle
+          - for (let j = 0; j < cols; j++) {
+            td= (2*i - j)
+          - } 
+      - } 

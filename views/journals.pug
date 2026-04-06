@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title
+    - let results  = [{author: "Alice Walker", pages: 120, theme: "Travel"}, {author: "Marcus Aurelius", pages: 200, theme: "Philosophy"}, {author: "Jane Doe", pages: 95, theme: "Daily Reflections"}]
+    div(class="container-fluid")
+      div(class="row")
+        each journal in results
+          div(class="col-sm-2")
+            p Author: #{journal.author}
+            p Pages: #{journal.pages}
+            p Theme: #{journal.theme}
+    
