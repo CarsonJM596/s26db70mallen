@@ -93,3 +93,20 @@ exports.costume_create_post = async function(req, res) {
     res.send({ error: err.message });
   }
 };
+
+exports.costume_detail = async function(req, res) {
+  console.log("detail " + req.params.id);
+
+  try {
+    const result = await Costume.findById(req.params.id);
+    
+    if (!result) {
+      res.status(404).send({ error: "Costume not found" });
+      return;
+    }
+
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: `Error retrieving document for id ${req.params.id}` });
+  }
+};
