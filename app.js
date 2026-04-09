@@ -13,6 +13,7 @@ var usersRouter = require('./routes/users');
 var journalsRouter = require('./routes/journals');
 var gridRouter = require('./routes/grid');
 var pickRouter = require('./routes/pick');
+var costumesRouter = require('./routes/costumes');
 var app = express();
 
 const mongoose = require('mongoose');
@@ -76,6 +77,7 @@ app.use('/journals', journalsRouter);
 app.use('/grid', gridRouter);
 app.use('/selector', pickRouter);
 app.use('/resource', resourceRouter);
+app.use('/costumes', costumesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

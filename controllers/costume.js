@@ -61,3 +61,35 @@ exports.costume_update_put = async function(req, res) {
     res.status(500).send(err);
   }
 };
+
+exports.costume_view_all_Page = async function(req, res) {
+  try {
+    const theCostumes = await Costume.find();
+    res.render('costumes', {
+      title: 'Costume Search Results',
+      results: theCostumes
+    });
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
+
+exports.costume_create_post = async function(req, res) {
+  console.log(req.body);
+
+  let document = new Costume();
+
+  // Pull data from request body (JSON)
+  document.costume_type = req.body.costume_type;
+  document.size = req.body.size;
+  document.cost = req.body.cost;
+
+  try {
+    let result = await document.save();
+    res.send(result);
+  } catch (err) {
+    res.status(500);
+    res.send({ error: err.message });
+  }
+};
