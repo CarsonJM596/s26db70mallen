@@ -110,3 +110,34 @@ exports.costume_detail = async function(req, res) {
     res.status(500).send({ error: `Error retrieving document for id ${req.params.id}` });
   }
 };
+
+exports.costume_update_put = async function(req, res) {
+  console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
+
+  try {
+    let toUpdate = await Costume.findById(req.params.id);
+
+    if (!toUpdate) {
+      res.status(404).send({ error: "Costume not found" });
+      return;
+    }
+
+    // Update fields
+    if (req.body.costume_type)
+      toUpdate.costume_type = req.body.costume_type;
+
+    if (req.body.cost)
+      toUpdate.cost = req.body.cost;
+
+    if (req.body.size)
+      toUpdate.size = req.body.size;
+
+    let result = await toUpdate.save();
+
+    res.send(result);
+
+  } catch (err) {
+    console.error(err); // 👈 VERY IMPORTANT for debugging
+    res.status(500).send({ error: `Update for id ${req.params.id} failed` });
+  }
+};
