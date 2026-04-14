@@ -6,4 +6,5 @@ var router = express.Router();
 router.get('/', costume_controllers.costume_view_all_Page);
 router.get('/detail', costume_controllers.costume_view_one_Page);
 router.get('/create', costume_controllers.costume_create_Page);
+router.get('/update', costume_controllers.costume_update_Page);
 module.exports = router;

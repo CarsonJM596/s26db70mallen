@@ -195,3 +195,19 @@ exports.costume_create_Page = function(req, res) {
     res.status(500).send({ error: err.message });
   }
 };
+
+exports.costume_update_Page = async function(req, res) {
+  console.log("update view for item " + req.query.id);
+
+  try {
+    let result = await Costume.findById(req.query.id);
+
+    res.render('costumeupdate', {
+      title: 'Costume Update',
+      toShow: result
+    });
+
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+};
