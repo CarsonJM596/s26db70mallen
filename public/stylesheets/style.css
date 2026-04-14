@@ -9,5 +9,8 @@ a {
 
 .costumeAttr {
   background-color: aquamarine;
-  width: 120px;
+  width: 140px;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 5px;
 }

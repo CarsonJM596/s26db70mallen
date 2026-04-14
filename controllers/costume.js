@@ -167,10 +167,13 @@ exports.costume_view_one_Page = async function(req, res) {
   console.log("single view for id " + req.query.id);
 
   try {
-    const result = await Costume.findById(req.query.id);
+    let result = await Costume.findById(req.query.id);
 
     if (!result) {
-      res.status(404).send("Costume not found");
+      res.render('costumedetail', {
+        title: 'Costume Detail',
+        toShow: null
+      });
       return;
     }
 
@@ -202,6 +205,14 @@ exports.costume_update_Page = async function(req, res) {
   try {
     let result = await Costume.findById(req.query.id);
 
+    if (!result) {
+      res.render('costumeupdate', {
+        title: 'Costume Update',
+        toShow: null
+      });
+      return;
+    }
+
     res.render('costumeupdate', {
       title: 'Costume Update',
       toShow: result
@@ -217,6 +228,14 @@ exports.costume_delete_Page = async function(req, res) {
 
   try {
     let result = await Costume.findById(req.query.id);
+
+    if (!result) {
+      res.render('costumedelete', {
+        title: 'Costume Delete',
+        toShow: null
+      });
+      return;
+    }
 
     res.render('costumedelete', {
       title: 'Costume Delete',

@@ -3,42 +3,52 @@ extends layout
 block content
   h1= title
 
-  - let costumeid = toShow._id
+  if (toShow == null)
+    h2 No instance found
+  else
+    - let costumeid = toShow._id
+    - let costume_type = toShow.costume_type
+    - let costumecost = toShow.cost
+    - let costumesize = toShow.size
+    - let actionid = "/resource/costumes/" + costumeid
 
-  div
-    div.row
-      div(class='costumeAttr mr-3') Costume ID:
-      div #{costumeid}
+    .container
+      .card.p-3.shadow
 
-  form(id='CostumeForm', action=`/resource/costumes/${costumeid}?_method=PUT`, method="POST")
+        div.row.mb-2
+          div.mr-2 ID:
+          div #{costumeid}
 
-    div.form-group
-      label.costumeAttr(for='costume_type') Costume type
-      input#costume_type(type='text', name='costume_type', value=toShow.costume_type)
+        form(id='CostumeForm', action=actionid, method="POST")
 
-    div.form-group
-      label.costumeAttr(for='size') Costume size
-      input#size(type='text', name='size', value=toShow.size)
+          div.form-group
+            label.costumeAttr(for='costume_type') Costume type
+            input#costume_type(type='text', name='costume_type', value=costume_type)
 
-    div.form-group
-      label.costumeAttr(for='cost') Costume cost
-      input#cost(type='number', name='cost', value=toShow.cost)
+          div.form-group
+            label.costumeAttr(for='size') Costume size
+            input#size(type='text', name='size', value=costumesize)
 
-    input(type="submit", value="Update")
+          div.form-group
+            label.costumeAttr(for='cost') Costume cost
+            input#cost(type='number', name='cost', value=costumecost)
 
-  script.
-    document.forms['CostumeForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
+          input.btn.btn-primary(type="submit", value="Update")
 
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target))
-      })
-      .then((resp) => resp.json())
-      .then((body) => {
-        alert("Update succeeded");
-      })
-      .catch((error) => {
-        alert("Update failed " + error);
+    script.
+      document.forms['CostumeForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        fetch("#{actionid}", {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target))
+        })
+        .then(resp => resp.json())
+        .then(() => {
+          alert("Update succeeded");
+          window.location.href = "/costumes";
+        })
+        .catch(err => {
+          alert("Update failed " + err);
+        });
       });
-    });
