@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  h1= title
+
+  if toShow
+    - let costumeid = toShow._id
+    - let costume_type = toShow.costume_type
+    - let costumecost = toShow.cost
+    - let costumesize = toShow.size
+
+    div
+      div.row
+        div(class='costumeAttr mr-3') Costume ID:
+        div #{costumeid}
+
+      div.row
+        div(class='costumeAttr mr-3') Costume Type:
+        div #{costume_type}
+
+      div.row
+        div(class='costumeAttr mr-3') Costume Size:
+        div #{costumesize}
+
+      div.row
+        div(class='costumeAttr mr-3') Costume Cost:
+        div #{costumecost}
+
+    br
+
+    button.btn.btn-danger#deleteBtn Delete
+    button.btn.btn-secondary#cancelBtn Cancel
+
+    script.
+      const id = "#{costumeid}";
+
+      document.getElementById('deleteBtn').addEventListener('click', () => {
+        fetch(`/resource/costumes/${id}`, {
+          method: 'DELETE'
+        })
+        .then(resp => resp.json())
+        .then(data => {
+          alert("Delete succeeded");
+          window.location.href = "/costumes";
+        })
+        .catch(err => {
+          alert("Delete failed " + err);
+        });
+      });
+
+      document.getElementById('cancelBtn').addEventListener('click', () => {
+        window.location.href = "/costumes";
+      });
+
+  else
+    h2 No item found
