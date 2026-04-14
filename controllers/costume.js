@@ -162,3 +162,24 @@ exports.costume_delete = async function(req, res) {
     res.send({ error: `Error deleting ${err}` });
   }
 };
+
+exports.costume_view_one_Page = async function(req, res) {
+  console.log("single view for id " + req.query.id);
+
+  try {
+    const result = await Costume.findById(req.query.id);
+
+    if (!result) {
+      res.status(404).send("Costume not found");
+      return;
+    }
+
+    res.render('costumedetail', {
+      title: 'Costume Detail',
+      toShow: result
+    });
+
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+};
