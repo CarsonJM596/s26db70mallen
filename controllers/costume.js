@@ -137,7 +137,28 @@ exports.costume_update_put = async function(req, res) {
     res.send(result);
 
   } catch (err) {
-    console.error(err); // 👈 VERY IMPORTANT for debugging
+    console.error(err); 
     res.status(500).send({ error: `Update for id ${req.params.id} failed` });
+  }
+};
+
+exports.costume_delete = async function(req, res) {
+  console.log("delete " + req.params.id);
+
+  try {
+    const result = await Costume.findByIdAndDelete(req.params.id);
+
+    // If nothing was deleted
+    if (!result) {
+      res.status(404).send({ error: "Costume not found" });
+      return;
+    }
+
+    console.log("Removed " + result);
+    res.send(result);
+
+  } catch (err) {
+    res.status(500);
+    res.send({ error: `Error deleting ${err}` });
   }
 };
