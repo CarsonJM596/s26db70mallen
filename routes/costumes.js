@@ -5,5 +5,5 @@ var router = express.Router();
 // GET costumes page
 router.get('/', costume_controllers.costume_view_all_Page);
 router.get('/detail', costume_controllers.costume_view_one_Page);
-
+router.get('/create', costume_controllers.costume_create_Page);
 module.exports = router;
