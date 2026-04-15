@@ -64,14 +64,16 @@ exports.costume_update_put = async function(req, res) {
 
 exports.costume_view_all_Page = async function(req, res) {
   try {
-    const theCostumes = await Costume.find();
+    let theCostumes = await Costume.find();
+
     res.render('costumes', {
       title: 'Costume Search Results',
       results: theCostumes
     });
-  } catch (err) {
+
+  } catch(err) {
     res.status(500);
-    res.send({ error: err.message });
+    res.send(`{"error": ${err}}`);
   }
 };
 

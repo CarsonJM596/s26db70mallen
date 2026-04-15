@@ -3,9 +3,22 @@ extends layout
 block content
   h1= title
 
-  ul
-    each item in results
-      li 
-        | Type: #{item.costume_type}, 
-        | Size: #{item.size}, 
-        | Cost: $#{item.cost}
+  - let items = results || [];
+
+  div.container-fluid
+    div.row
+      each item in items
+        div(class="row-sm-2 m-1")
+
+          | Item #{item.costume_type}(#{item.size}) is #{item.cost}
+
+          br
+
+          a(href="/costumes/update?id=" + item._id)
+            button.btn.btn-warning Update
+          
+          a(href="/costumes/delete?id=" + item._id)
+            button.btn.btn-danger Delete
+          
+          a(href="/costumes/detail?id=" + item._id)
+            button.btn.btn-info Detail
