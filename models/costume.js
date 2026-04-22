@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 const costumeSchema = mongoose.Schema({
   costume_type: {
     type: String,
-    required: true
+    required: true,
+    minlength: 3,
+    maxlength: 30
   },
   size: {
     type: String,
@@ -11,8 +13,8 @@ const costumeSchema = mongoose.Schema({
   },
   cost: {
     type: Number,
-    min: [1, "Cost must be at least 1"],
-    max: [1000, "Cost must be under 1000"]
+    min: 1,
+    max: 1000
   }
 });
 
