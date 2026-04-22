@@ -48,18 +48,34 @@ exports.costume_delete = async function(req, res) {
 
 // Update a costume
 exports.costume_update_put = async function(req, res) {
+  console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
+
   try {
     let toUpdate = await Costume.findById(req.params.id);
 
-    if (req.body.costume_type) toUpdate.costume_type = req.body.costume_type;
-    if (req.body.size) toUpdate.size = req.body.size;
-    if (req.body.cost) toUpdate.cost = req.body.cost;
+    if (!toUpdate) {
+      return res.status(404).send({ error: "Costume not found" });
+    }
 
-    const result = await toUpdate.save();
+    // Update fields (IMPORTANT: check for undefined, not truthy)
+    if (req.body.costume_type !== undefined)
+      toUpdate.costume_type = req.body.costume_type;
+
+    if (req.body.size !== undefined)
+      toUpdate.size = req.body.size;
+
+    if (req.body.cost !== undefined)
+      toUpdate.cost = req.body.cost;
+
+    // Save triggers validation
+    let result = await toUpdate.save();
+
     res.send(result);
+
   } catch (err) {
-    res.status(500).send(err);
-  }
+  console.error(err);
+  res.status(500).send(err.message);
+  } 
 };
 
 exports.costume_view_all_Page = async function(req, res) {

@@ -43,12 +43,20 @@ block content
           method: 'PUT',
           body: new URLSearchParams(new FormData(event.target))
         })
-        .then(resp => resp.json())
+        .then(async (resp) => {
+          const text = await resp.text();
+
+          if (!resp.ok) {
+            throw new Error(text);
+          }
+
+          return text;
+        })
         .then(() => {
           alert("Update succeeded");
           window.location.href = "/costumes";
         })
         .catch(err => {
-          alert("Update failed " + err);
+          alert("Update failed: " + err.message);
         });
       });
