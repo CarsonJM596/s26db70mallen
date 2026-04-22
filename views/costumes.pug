@@ -3,22 +3,35 @@ extends layout
 block content
   h1= title
 
-  - let items = results || [];
+  // 🔵 CREATE BUTTON (top of page)
+  a(href="/costumes/create")
+    button.btn.btn-success.mb-3 Create New Costume
 
-  div.container-fluid
-    div.row
-      each item in items
-        div(class="row-sm-2 m-1")
+  if results.length == 0
+    h3 No costumes found
+  else
+    .container
+      table.table.table-striped
+        thead
+          tr
+            th Type
+            th Size
+            th Cost
+            th Actions
 
-          | Item #{item.costume_type}(#{item.size}) is #{item.cost}
+        tbody
+          each costume in results
+            tr
+              td #{costume.costume_type}
+              td #{costume.size}
+              td #{costume.cost}
 
-          br
+              td
+                a(href=`/costumes/detail?id=${costume._id}`)
+                  button.btn.btn-info.btn-sm.mr-1 Detail
 
-          a(href="/costumes/update?id=" + item._id)
-            button.btn.btn-warning Update
-          
-          a(href="/costumes/delete?id=" + item._id)
-            button.btn.btn-danger Delete
-          
-          a(href="/costumes/detail?id=" + item._id)
-            button.btn.btn-info Detail
+                a(href=`/costumes/update?id=${costume._id}`)
+                  button.btn.btn-warning.btn-sm.mr-1 Update
+
+                a(href=`/costumes/delete?id=${costume._id}`)
+                  button.btn.btn-danger.btn-sm Delete
